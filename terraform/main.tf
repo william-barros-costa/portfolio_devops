@@ -1,11 +1,16 @@
-resource "utilities_file_downloader" "server_iso" {
-	url = "https://releases.ubuntu.com/jammy/ubuntu-22.04.5-live-server-amd64.iso"
-	filename = var.server_image
+resource "tls_private_key" "ssh_key" {
+   algorithm = "ECDSA"
+   ecdsa_curve = "P384"
+}
+
+resource "local_file" "private_key_pem" {
+  content  = tls_private_key.ssh_key.private_key_pem
+  filename = "${path.module}/id_rsa"
+  file_permission = "0600"
 }
 
 module "local-cloud" {
   source = "./local-cloud"
-  server_image = var.server_image
+  ssh_public_key = tls_private_key.ssh_key.public_key_openssh
 }
-
 
