@@ -1,4 +1,4 @@
 terraform.tfstate*
 .terraform*
 resources/
-id_rsa
+**/id_rsa

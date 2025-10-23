@@ -14,8 +14,12 @@ module "local-cloud" {
   ssh_public_key = tls_private_key.ssh_key.public_key_openssh
 }
 
-module "kubernetes" {
-  source = "./kubernetes"
-  private_key = tls_private_key.ssh_key.private_key_pem
-  vm_ip = module.local-cloud.vm_ip 
+output "addresses" {
+  value = module.local-cloud.vm_ip
 }
+
+# module "kubernetes" {
+#   source = "./kubernetes"
+#   private_key = tls_private_key.ssh_key.private_key_pem
+#   vm_ip = module.local-cloud.vm_ip 
+# }
