@@ -1,3 +1,8 @@
+# Locals
+locals {
+  volume_size = 1020**3 * var.volume_size
+}
+
 resource "libvirt_pool" "ubuntu" {
   name = "ubuntu"
   type = "dir"
@@ -16,7 +21,7 @@ resource "libvirt_volume" "ubuntu_image" {
 resource "libvirt_volume" "vm_disk" {
   name = "master"
   pool = "default"
-  size = 10*1024*1024*1024
+  size = locals.volume_size
   base_volume_id = libvirt_volume.ubuntu_image.id
   format = "qcow2"
 }

@@ -2,10 +2,10 @@
 ssh_pwauth: true
 chpasswd:
   list: |
-     ubuntu:ubuntu
+     ${user}:${password}
   expire: false
 users:
-  - name: ubuntu
+  - name: ${user}
     sudo: ALL=(ALL) NOPASSWD:ALL
     groups: sudo
     lock_passwd: false

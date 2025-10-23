@@ -1,2 +1,0 @@
-[vm]
-192.168.122.113 ansible_ssh_private_key_file=/home/wbc/Repositories/portfolio_devops/terraform/id_rsa ansible_user=ubuntu
