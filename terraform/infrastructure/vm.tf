@@ -1,13 +1,8 @@
-# Locals
-locals {
-  volume_size = 1020**3 * var.volume_size
-}
-
 resource "libvirt_pool" "ubuntu" {
   name = "ubuntu"
   type = "dir"
   target {
-    path = "/tmp/portfolio"
+    path = var.volume_location
   }
 }
 
@@ -21,33 +16,23 @@ resource "libvirt_volume" "ubuntu_image" {
 resource "libvirt_volume" "vm_disk" {
   name = "master"
   pool = "default"
-  size = locals.volume_size
+  size = local.volume_size
   base_volume_id = libvirt_volume.ubuntu_image.id
   format = "qcow2"
 }
 
-data "template_file" "user_data" {
-  template = file("${path.module}/user_data.cfg")
-  vars = {
-    ssh_authorized_key = var.ssh_public_key
-  }
-}
-
-data "template_file" "network_config" {
-  template = file("${path.module}/network_data.cfg")
-}
 
 resource "libvirt_cloudinit_disk" "commoninit" {
   name = "commoninit.iso"
-  user_data = data.template_file.user_data.rendered
-  network_config = data.template_file.network_config.rendered
+  user_data = local.user_data
+  network_config = local.network_data
   pool = libvirt_pool.ubuntu.name
 }
 
 resource "libvirt_domain" "vm" {
-  name = "server"
-  memory = 4096
-  vcpu = 4
+  name = var.server_name
+  memory = var.memory
+  vcpu = var.vcpu
 
   network_interface {
     network_name= "default" 

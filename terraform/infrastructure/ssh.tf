@@ -5,6 +5,6 @@ resource "tls_private_key" "ssh_key" {
 
 resource "local_file" "private_key_pem" {
   content  = tls_private_key.ssh_key.private_key_pem
-  filename = "${path.module}/id_rsa"
-  file_permission = "0600"
+  filename = "${local.root}/${local.ssh_key_location}"
+  file_permission = var.ssh_key_permission
 }
