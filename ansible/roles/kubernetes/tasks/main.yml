@@ -1,7 +1,6 @@
 ---
 - name: Download the public signing key for the Kubernetes package repositories
-  shell: curl -fsSL https://pkgs.k8s.io/core:/stable:/v{{ kubernetes_version }}/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-#  when: not k8s_gpg_key_check.stat.exists
+  shell: curl -fsSL https://pkgs.k8s.io/core:/stable:/v{{ kubernetes_version }}/deb/Release.key | sudo gpg --dearmor --yes -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
 - name: Add Kubernetes Repository
   ansible.builtin.lineinfile:
@@ -28,8 +27,9 @@
     creates: /etc/kubernetes/admin.conf
 
 - name: Configure kubectl for root
+  become: true
   shell: |
     mkdir -p /root/.kube
-    cp -i /etc/kubernetes/admin.conf /root/.kube/config
+    cp /etc/kubernetes/admin.conf /root/.kube/config
     chown root:root /root/.kube/config
 
