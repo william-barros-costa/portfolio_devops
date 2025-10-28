@@ -3,6 +3,7 @@ ROOT := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 TERRAFORM_INFRA = "terraform/infrastructure"
 TERRAFORM_DEPLOY = "terraform/deployment"
 ANSIBLE_DIR = "ansible"
+PYTHON_EXECUTABLE = "ansible/env/bin/python"
 
 test:
 	@echo "dir: $(ROOT)"
@@ -14,11 +15,11 @@ infra:
 
 ping:
 	@echo "📡  Ping infrastructure through Ansible..."
-	ansible cluster -m ping -i resources/inventory.ini
+	$(PYTHON_EXECUTABLE) -m ansible cluster -m ping -i resources/inventory.ini
 
 config:
 	@echo "⚙️  Running Ansible playbook to configure nodes and install Kubernetes..."
-	cd $(ANSIBLE_DIR) && ansible-playbook -i inventory.ini playbook.yml
+	$(PYTHON_EXECUTABLE) -m ansible playbook -i resources/inventory.ini ansible/playbook.yml
 
 deploy:
 	@echo "📦 Deploying cluster tools via Terraform..."

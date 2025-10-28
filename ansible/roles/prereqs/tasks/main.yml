@@ -1,0 +1,28 @@
+---
+- name: Load Containerd kernel Modules
+  copy:
+    dest: /etc/modules-load.d/containerd.conf
+    src: files/containerd.conf
+
+- name: Load Kubernetes sysctl Modules
+  copy:
+    dest: /etc/sysctl.d/kubernetes.conf
+    src: files/kubernetes.conf
+
+- name: Enable Kernel Modules
+  shell: |
+    modprobe overlay
+    modprobe br_netfilter
+
+- name: Apply sysctl
+  command: sysctl --system
+
+- name: Install base packages
+  apt:
+    name:
+      - curl
+      - gnupg2
+      - apt-transport-https
+      - ca-certificates
+      - software-properties-common
+    update_cache: yes

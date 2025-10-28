@@ -1,0 +1,33 @@
+---
+- name: Add Docker GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker apt repository
+  apt_repository: 
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable"
+    state: present
+
+- name: Install containerd
+  apt:
+    name: containerd.io
+    state: present
+    update_cache: yes
+
+- name: Configure Containerd
+  shell: "containerd config default > /etc/containerd/config.toml"
+  args:
+    creates: "/etc/containerd.config.toml"
+
+- name: Use systemd cgroup driver
+  replace:
+    path: /etc/containerd/config.toml
+    regexp: '^(\s*)SystemdCgroup\s*=\s*false'
+    replace: '\1SystemdCgroup = true'
+
+- name: Enable and Restart Containerd
+  systemd:
+    name: containerd
+    enabled: true
+    state: restarted
