@@ -4,6 +4,8 @@ TERRAFORM_INFRA = "terraform/infrastructure"
 TERRAFORM_DEPLOY = "terraform/deployment"
 ANSIBLE_DIR = "ansible"
 PYTHON_EXECUTABLE = "ansible/env/bin/python"
+FIRST_MACHINE_IP = $(shell terraform -chdir=terraform/infrastructure output -json ips | jq -r '.[0]')
+USER  = $(shell terraform -chdir=terraform/infrastructure output user)
 
 test:
 	@echo "dir: $(ROOT)"
@@ -12,6 +14,11 @@ infra:
 	@echo "🚀 Provisioning infrastructure with Terraform..."
 	cd $(TERRAFORM_INFRA) && terraform init
 	cd $(TERRAFORM_INFRA) && terraform apply -auto-approve
+
+ssh:
+	@echo "📡  Connecting to server..."
+	ssh -i resources/id_rsa $(USER)@$(FIRST_MACHINE_IP)
+
 
 ping:
 	@echo "📡  Ping infrastructure through Ansible..."
