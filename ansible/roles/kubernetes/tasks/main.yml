@@ -33,3 +33,15 @@
     cp /etc/kubernetes/admin.conf /root/.kube/config
     chown root:root /root/.kube/config
 
+- name: Download Helm Binary
+  unarchive:
+    remote_src: true
+    src: https://get.helm.sh/helm-v{{ helm_version }}-linux-amd64.tar.gz
+    dest: /tmp
+
+- name: Move Helm Binary
+  copy:
+    remote_src: true
+    src: /tmp/linux-amd64/helm
+    dest: /usr/local/bin/helm
+    mode: 0755
