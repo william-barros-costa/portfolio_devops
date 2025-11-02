@@ -1,7 +1,7 @@
 # ------- Variables ------------
 ROOT := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 TERRAFORM_INFRA = "terraform/infrastructure"
-TERRAFORM_DEPLOY = "terraform/deployment"
+TERRAFORM_DEPLOY = "terraform/cluster"
 ANSIBLE_DIR = "ansible"
 PYTHON_EXECUTABLE = "ansible/env/bin/python"
 FIRST_MACHINE_IP = $(shell terraform -chdir=terraform/infrastructure output -json ips | jq -r '.[0]')
@@ -20,7 +20,6 @@ infra:
 ssh:
 	@echo "📡  Connecting to server..."
 	ssh -i resources/id_rsa $(USER)@$(FIRST_MACHINE_IP)
-
 
 ping:
 	@echo "📡  Ping infrastructure through Ansible..."
