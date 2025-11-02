@@ -45,3 +45,9 @@
     src: /tmp/linux-amd64/helm
     dest: /usr/local/bin/helm
     mode: 0755
+
+- name: Extract Kubeconfig to Host machine
+  fetch:
+    src: /etc/kubernetes/admin.conf
+    dest: ../resources/kubeconf.conf
+    flat: true
