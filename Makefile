@@ -4,7 +4,7 @@ TERRAFORM_INFRA = "terraform/infrastructure"
 TERRAFORM_DEPLOY = "terraform/cluster"
 ANSIBLE_DIR = "ansible"
 PYTHON_EXECUTABLE = "ansible/env/bin/python"
-FIRST_MACHINE_IP = $(shell terraform -chdir=terraform/infrastructure output -json ips | jq -r '.[0]')
+FIRST_MACHINE_IP = $(shell terraform -chdir=terraform/infrastructure output -json ips | jq -r '.["master"]')
 USER  = $(shell terraform -chdir=terraform/infrastructure output user)
 
 all: destroy infra

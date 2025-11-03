@@ -22,24 +22,51 @@
   command: apt-mark hold kubelet kubeadm kubectl
 
 - name: Initialize Kubernetes cluster (on master node)
+  when: "'master' in group_names"
   command: kubeadm init --pod-network-cidr=192.168.0.0/16
   args:
     creates: /etc/kubernetes/admin.conf
 
 - name: Configure kubectl for root
+  when: "'master' in group_names"
   become: true
   shell: |
     mkdir -p /root/.kube
     cp /etc/kubernetes/admin.conf /root/.kube/config
     chown root:root /root/.kube/config
 
+- name: Generate Join Command
+  when: "'master' in group_names"
+  command: kubeadm token create --print-join-command
+  register: join_cmd
+
+- name: Create fact on master
+  when: "'master' in group_names"
+  set_fact:
+    join_command: "{{ join_cmd.stdout }}"
+
+- name: Synchronize join_command variable
+  when: "'master' in group_names"
+  wait_for:
+    timeout: 10
+  until: hostvars[groups['master'][0]].get('join_command') is defined
+  retries: 10
+  delay: 5
+
+- name: Join Control Plane
+  when: "'worker' in group_names"
+  command: "{{ hostvars[groups['master'][0]].join_command }}"
+
+
 - name: Download Helm Binary
+  when: "'master' in group_names"
   unarchive:
     remote_src: true
     src: https://get.helm.sh/helm-v{{ helm_version }}-linux-amd64.tar.gz
     dest: /tmp
 
 - name: Move Helm Binary
+  when: "'master' in group_names"
   copy:
     remote_src: true
     src: /tmp/linux-amd64/helm
@@ -47,6 +74,7 @@
     mode: 0755
 
 - name: Extract Kubeconfig to Host machine
+  when: "'master' in group_names"
   fetch:
     src: /etc/kubernetes/admin.conf
     dest: ../resources/kubeconf.conf

@@ -28,9 +28,16 @@ resource "libvirt_volume" "vm_disk" {
 
 
 resource "libvirt_cloudinit_disk" "commoninit" {
+  for_each = { for vm in var.virtual_machines: vm.name => vm}
 
-  name = "commoninit.iso"
-  user_data = local.user_data
+  name = "commoninit_${each.key}.iso"
+  user_data = templatefile("${path.module}/templates/user_data.cfg.tpl", {
+    hostname = each.key
+    user = var.user
+    password = var.password
+    ssh_authorized_key = tls_private_key.ssh_key.public_key_openssh
+  })
+
   network_config = local.network_data
   pool = libvirt_pool.ubuntu.name
 }
@@ -62,6 +69,6 @@ resource "libvirt_domain" "vm" {
     target_port = "0"
     target_type = "serial"
   }
-  cloudinit = libvirt_cloudinit_disk.commoninit.id
+  cloudinit = libvirt_cloudinit_disk.commoninit[each.key].id
 }
 
