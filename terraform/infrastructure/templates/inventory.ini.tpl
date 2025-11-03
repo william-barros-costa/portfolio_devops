@@ -1,7 +1,20 @@
-[cluster]
-%{ for address in addresses ~}
-${address}
+[master]
+%{ for vm in vms ~}
+%{ if vm.name == "master" ~}
+${vm.name} ansible_host=${addresses[vm.name]}
+%{endif ~}
 %{ endfor ~}
+
+[worker]
+%{ for vm in vms ~}
+%{ if vm.name != "master" ~}
+${vm.name} ansible_host=${addresses[vm.name]}
+%{endif ~}
+%{ endfor ~}
+
+[cluster:children]
+master
+worker
 
 [cluster:vars]
 ansible_user=${user}

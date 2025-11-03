@@ -7,22 +7,28 @@ resource "libvirt_pool" "ubuntu" {
 }
 
 resource "libvirt_volume" "ubuntu_image" {
-  name = "ubuntu-24.04-noble.qcow2"
+  for_each = { for vm in var.virtual_machines: vm.name => vm}
+
+  name = "ubuntu-24.04-noble-${each.key}.qcow2"
   pool = "default"
   source = "https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img"
   format = "qcow2"
 }
 
 resource "libvirt_volume" "vm_disk" {
-  name = "master"
+  for_each = { for vm in var.virtual_machines: vm.name => vm}
+
+  name = each.key
   pool = "default"
-  size = local.volume_size
-  base_volume_id = libvirt_volume.ubuntu_image.id
+  # Conversion to gigabytes
+  size = each.value.size * 1024 * 1024 * 1024
+  base_volume_id = libvirt_volume.ubuntu_image[each.key].id
   format = "qcow2"
 }
 
 
 resource "libvirt_cloudinit_disk" "commoninit" {
+
   name = "commoninit.iso"
   user_data = local.user_data
   network_config = local.network_data
@@ -30,9 +36,11 @@ resource "libvirt_cloudinit_disk" "commoninit" {
 }
 
 resource "libvirt_domain" "vm" {
-  name = var.server_name
-  memory = var.memory
-  vcpu = var.vcpu
+  for_each = { for vm in var.virtual_machines: vm.name => vm}
+
+  name = each.key
+  memory = each.value.memory
+  vcpu = each.value.vcpu
 
   network_interface {
     network_name= "default" 
@@ -40,7 +48,7 @@ resource "libvirt_domain" "vm" {
   }
 
   disk { 
-    volume_id = libvirt_volume.vm_disk.id 
+    volume_id = libvirt_volume.vm_disk[each.key].id 
   }
 
   graphics {
