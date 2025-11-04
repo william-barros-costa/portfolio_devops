@@ -7,7 +7,7 @@ PYTHON_EXECUTABLE = "ansible/env/bin/python"
 FIRST_MACHINE_IP = $(shell terraform -chdir=terraform/infrastructure output -json ips | jq -r '.["master"]')
 USER  = $(shell terraform -chdir=terraform/infrastructure output user)
 
-all: destroy infra
+all: destroy infra config
 
 test:
 	@echo "dir: $(ROOT)"

@@ -31,8 +31,8 @@ variable "virtual_machines" {
   }))
 
   default = [
-    { name = "master",  memory = 6144, vcpu = 3, size = 150 },
-    { name = "worker1", memory = 8192, vcpu = 4, size = 50 },
-    { name = "worker2", memory = 8192, vcpu = 4, size = 50 },
+    { name = "master",  memory = 6144, vcpu = 2, size = 150 },
+    { name = "worker1", memory = 8192, vcpu = 3, size = 50 },
+    { name = "worker2", memory = 8192, vcpu = 3, size = 50 },
   ]
 }
