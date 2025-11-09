@@ -11,5 +11,5 @@
     - prereqs
     - containerd
     - kubernetes
-#    - cni
+    - cni
 

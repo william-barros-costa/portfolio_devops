@@ -10,7 +10,7 @@ resource "libvirt_volume" "ubuntu_image" {
   for_each = { for vm in var.virtual_machines: vm.name => vm}
 
   name = "ubuntu-24.04-noble-${each.key}.qcow2"
-  pool = "default"
+  pool = libvirt_pool.ubuntu.name
   source = "https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img"
   format = "qcow2"
 }
@@ -19,7 +19,7 @@ resource "libvirt_volume" "vm_disk" {
   for_each = { for vm in var.virtual_machines: vm.name => vm}
 
   name = each.key
-  pool = "default"
+  pool = libvirt_pool.ubuntu.name
   # Conversion to gigabytes
   size = each.value.size * 1024 * 1024 * 1024
   base_volume_id = libvirt_volume.ubuntu_image[each.key].id
