@@ -12,6 +12,14 @@ all: destroy infra config
 test:
 	@echo "dir: $(ROOT)"
 
+pause:
+	@echo "🛑 Pausing Virtual Machines..."
+	cd $(TERRAFORM_INFRA) && terraform output -json ips | jq -r 'keys[]' | xargs -n1 sudo virsh shutdown
+
+resume:
+	@echo "▶️ Resuming Virtual Machines..."
+	cd $(TERRAFORM_INFRA) && terraform output -json ips | jq -r 'keys[]' | xargs -n1 sudo virsh start
+
 infra:
 	@echo "🚀 Provisioning infrastructure with Terraform..."
 	cd $(TERRAFORM_INFRA) && terraform init
