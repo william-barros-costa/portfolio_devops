@@ -7,9 +7,12 @@
     kubernetes_version: "1.34"
     cni_plugin: "calico"
     helm_version: "3.19.0"
+    helmfile_version: "1.1.9"
   roles:
     - prereqs
     - containerd
     - kubernetes
     - cni
+    # - helm
+    
 

@@ -1,5 +1,4 @@
 variable "volume_location" {
-  default = "/tmp/portfolio" 
   description = "Location to store the virtual machine data"
 }
 

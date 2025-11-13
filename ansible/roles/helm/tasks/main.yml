@@ -1,0 +1,27 @@
+---
+
+- name: Download HelmFile Binary
+  when: "'master' in group_names"
+  unarchive:
+    remote_src: true
+    src: https://github.com/helmfile/helmfile/releases/download/v{{ helmfile_version }}/helmfile_{{ helmfile_version }}_linux_amd64.tar.gz
+    dest: /tmp
+
+- name: Move Helm Binary
+  when: "'master' in group_names"
+  copy:
+    remote_src: true
+    src: /tmp/helmfile
+    dest: /usr/local/bin/helmfile
+    mode: 0755
+
+
+- name: Load Helmfile
+  when: "'master' in group_names"
+  copy:
+    dest: /tmp/helmfile.yml
+    src: "{{ playbook_dir }}/../manifests/helmfile.yml"
+
+- name: Installing Helm Charts Through helmfile
+  when: "'master' in group_names"
+  shell: helmfile apply -f /tmp/helmfile.yml
