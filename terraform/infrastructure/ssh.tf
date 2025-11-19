@@ -15,7 +15,7 @@ resource "null_resource" "add_to_known_host" {
   depends_on = [libvirt_domain.vm]
 
   provisioner "local-exec" {
-    command = "sleep 10 && ssh-keyscan -H ${libvirt_domain.vm[each.key].network_interface.0.addresses.0} 2>/dev/null >> ~/.ssh/known_hosts"
+    command = "sleep 20 && ssh-keyscan -H ${libvirt_domain.vm[each.key].network_interface.0.addresses.0} 2>/dev/null >> ~/.ssh/known_hosts"
   }
 }
 
