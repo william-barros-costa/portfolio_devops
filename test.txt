@@ -1,0 +1,190 @@
+flux
+    2  curl -s https://fluxcd.io/install.sh | sudo bash
+    3  flux bootstrap github --owner=william-barros-costa --repository=portfolio_devops --branch=main --path=cluster/system --personal
+    4  sudo chmod 777 /etc/kubernetes/admin.conf 
+    5  cp /etc/kubernetes/admin.conf .kube/config -f
+    6  mkdir .kube
+    7  cp /etc/kubernetes/admin.conf .kube/config -f
+    8  cp /etc/kubernetes/admin.conf .kube/config
+    9  ls .kube/
+   10  flux bootstrap github --owner=william-barros-costa --repository=portfolio_devops --branch=main --path=cluster/system --personal
+   11  kubectl get nodes
+   12  kubectl get  all -A
+   13  ls
+   14  cd cl
+   15  cd cluster/
+   16  kubectl apply -f system/git-source.yml 
+   17  kubectl apply -f system/kustomization.yml 
+   18  kubectl get all -A
+   19  kubectl apply -f system/kustomization.yml 
+   20  cat system/kustomization.yml 
+   21  cat system/apps.yml 
+   22  cat system/apps.yml.yml 
+   23  cat system/apps.yml
+   24  kubectl apply -d system/apps.yml
+   25  kubectl apply -f system/apps.yml
+   26  kubectl get all -A
+   27  kubectl get all -n flux-system
+   28  kubectl get all -A
+   29  kubectl apply -f system/kustomization.yml 
+   30  kubectl apply -k system/kustomization.yml 
+   31  kubectl apply -k system
+   32  kubectl get all -A
+   33  cat system/*.yml
+   34  ls
+   35  cat apps/
+   36  cat apps/harbor/*.yml
+   37  helm install flux-operator oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator   --namespace flux-system   --create-namespace
+   38  kubectl apply -k system
+   39  kubectl get all -A
+   40  kubectl apply -k system
+   41  kubectl -n flux-system get gitrepositories.source.toolkit.fluxcd.io
+   42  kubectl -n flux-system describe gitrepository system
+   43  kubectl -n flux-system get gitrepositories.source.toolkit.fluxcd.io
+   44  curl
+   45  curl https://github.com/william-barros-costa/portfolio_devops
+   46  kubectl apply -k system
+   47  kubectl -n flux-system get gitrepositories.source.toolkit.fluxcd.io
+   48  kubectl delete -k system
+   49  kubectl apply -k system
+   50  kubectl -n flux-system get gitrepositories.source.toolkit.fluxcd.io
+   51  kubectl -n flux-system describe gitrepository system
+   52  kubectl -n kube-system logs deploy/coredns
+   53  ping -c 3 github.com
+   54  cat /etc/resolv.conf 
+   55  ip route
+   56  kubectl -n kube-system get configmap coredns -o yaml
+   57  cat /etc/resolv.conf 
+   58  cat /etc/systemd/resolved.conf 
+   59  sudo apt-get update && sudo apt-get install vim
+   60  vim
+   61  vim /etc/systemd/resolved.conf 
+   62  sudo vim /etc/systemd/resolved.conf 
+   63  sudo systemctl restart systemd-resolved.service 
+   64  resolvectl status
+   65  sudo cat /var/lib/kubelet/config.yaml | grep -n resolvConf
+   66  kubectl run -it dns-test --image=busybox:1.36 --restart=Never --rm -- /bin/sh
+   67  sudo systemctl restart kubelet
+   68  kubectl run -it dns-test --image=busybox:1.36 --restart=Never --rm -- /bin/sh
+   69  sudo vim /var/lib/kubelet/config.yaml 
+   70  cat /run/systemd/resolve/resolv.conf 
+   71  sudo vim /var/lib/kubelet/config.yaml 
+   72  sudo systemctl restart systemd-resolved
+   73  resolvectl status
+   74  sudo systemctl restart kubelet
+   75  sudo systemctl status kubelet --no-pager
+   76  kubectl get nodes
+   77  >kubectl -n kube-system rollout restart deploy/coredns
+   78  kubectl -n kube-system get pods -l k8s-app=kube-dns
+   79  kubectl -n kube-system rollout restart deploy/coredns
+   80  kubectl -n kube-system get pods -l k8s-app=kube-dns
+   81  kubectl run -it dns-test --image=busybox:1.36 --restart=Never --rm -- /bin/sh
+   82  ls
+   83  kubectl get all -A
+   84  ls
+   85  cd cluster/
+   86  ls
+   87  cat system/git-source.yml 
+   88  ls
+   89  cd ..
+   90  ls
+   91  cd cluster/
+   92  ls
+   93  rm -rf cluster/
+   94  rm -rf kubectl 
+   95  cd ..
+   96  ls
+   97  rm -rf cluster/
+   98  ls
+   99  kubectl apply -k cluster/system
+  100  kubectl -n flux-system get gitrepositories.source.toolkit.fluxcd.io
+  101  kubectl -n flux-system describe gitrepository system
+  102  kubectl -n harbor get pods
+  103  ls cluster/
+  104  kubectl -n flux-system describe gitrepository system
+  105  kubectl -n flux-system get gitrepositories.source.toolkit.fluxcd.io
+  106  kubectl get all -n harbor
+  107  kubectl -n flux-system get kustomizations.kustomize.toolkit.fluxcd.io
+  108  kubectl -n flux-system describe kustomization apps
+  109  cd cluster/
+  110  cd apps/
+  111  ls
+  112  rm -rf grafana nexus prometheus/
+  113  ls
+  114  cd ..
+  115  kubectl destroy -k system
+  116  kubectl delete -k system
+  117  kubectl apply -k system
+  118  kubectl -n flux-system describe kustomization apps
+  119  kubectl -n flux-system get kustomization
+  120  kubectl -n flux-system describe kustomization apps
+  121  ls
+  122  ls apps/
+  123  ls apps/harbor/
+  124  kubectl -n flux-system get kustomizations.kustomize.toolkit.fluxcd.io
+  125  tree
+  126  sudo apt-get install tree
+  127  tree
+  128  cat apps/harbor/*.yml
+  129  cat system/*.yml
+  130  ls apps/
+  131  ls
+  132  cd ..
+  133  rm -rf cluster/
+  134  ls
+  135  cd
+  136  kubectl delete -f system
+  137  cd cluster/
+  138  kubectl delete -f system
+  139  kubectl apply -f system
+  140  cat apps/kustomization.yml 
+  141  kubectl delete -k system
+  142  kubectl apply -k system
+  143  kubectl get -n harbor all
+  144  kubectl -n flux-system get kustomization apps
+  145  kubectl -n flux-system describe kustomization apps
+  146  kubectl -n flux-system get kustomization apps
+  147  kubectl -n flux-system delete kustomization apps
+  148  kubectl -n flux-system get kustomization apps
+  149  kubectl -n flux-system get kustomization
+  150  kubectl apply -k system
+  151  kubectl -n flux-system get kustomization apps
+  152  grep grafana
+  153  cd ..
+  154  rm -rf cluster/
+  155  cd cluster/
+  156  kubectl apply -k system
+  157  kubectl delete -k system
+  158  kubectl apply -k system
+  159  kubectl -n flux-system get kustomization apps
+  160* 
+  161  rm -rf apps/grafana/
+  162  rm -rf apps/nexus/
+  163  rm -rf apps/prometheus/
+  164  kubectl delete -k system
+  165  kubectl apply -k system
+  166  kubectl -n flux-system get kustomization apps
+  167  kubectl -n flux-system describe kustomization apps
+  168  kubectl -n flux-system get kustomization apps
+  169  clear
+  170  kubectl delete -k system
+  171  kubectl apply -k system
+  172  kubectl -n flux-system get kustomization apps
+  173  kubectl apply -k system
+  174  kubectl -n flux-system get kustomization apps
+  175  kubectl delete -k system
+  176  kubectl apply -k system
+  177  kubectl -n flux-system get kustomization apps
+  178  kubectl -n flux-system describe kustomization apps
+  179  flux reconcile kustomization apps -n flux-system || true
+  180  kubectl delete -k system
+  181  kubectl apply -k system
+  182  kubectl -n flux-system describe kustomization apps
+  183  kubectl -n harbor get all
+  184  kubectl -n harbor get
+  185  kubectl -n harbor get all
+  186  kubectl get namespace
+  187  kubectl -n flux-system describe kustomization apps
+  188  kubectl get namespace
+  189  kubectl -n flux-system get all
+  190  history
