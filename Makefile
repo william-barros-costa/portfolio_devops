@@ -25,6 +25,13 @@ infra:
 	cd $(TERRAFORM_INFRA) && terraform init
 	cd $(TERRAFORM_INFRA) && terraform apply -auto-approve
 
+prepare:
+	sudo systemctl start libvirtd
+	sudo iptables -I FORWARD -i virbr0 -o wlan0 -j ACCEPT
+	sudo iptables -I FORWARD -i wlan0 -o virbr0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+	sudo iptables -I FORWARD -i virbr0 -o virbr0 -j ACCEPT
+
+
 ssh:
 	@echo "📡  Connecting to server..."
 	ssh -i resources/id_rsa $(USER)@$(FIRST_MACHINE_IP)

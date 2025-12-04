@@ -1,4 +1,4 @@
-flux
+
     2  curl -s https://fluxcd.io/install.sh | sudo bash
     3  flux bootstrap github --owner=william-barros-costa --repository=portfolio_devops --branch=main --path=cluster/system --personal
     4  sudo chmod 777 /etc/kubernetes/admin.conf 
