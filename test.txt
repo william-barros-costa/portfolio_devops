@@ -188,3 +188,85 @@
   188  kubectl get namespace
   189  kubectl -n flux-system get all
   190  history
+
+
+    sudo chmod 777 /etc/kubernetes/admin.conf 
+    2  mkdir .kube
+    3  cp /etc/kubernetes/admin.conf .kube/config
+    4  curl -s https://fluxcd.io/install.sh | sudo bash
+    5  flux install
+    6  ls
+    7  kubectl apply -k cluster/
+    8  ls cluster/
+    9  cd cluster/
+   10  tree
+   11  sudo apt-get update && sudo apt-get install tree
+   12  cat tree
+   13  tree
+   14  cd ..
+   15  kubectl apply -k cluster
+   16  cat -r **/*.yaml
+   17  cat system/*
+   18  cat system/*.yaml
+   19  find . -name "*.yaml" 2>/dev/null | xargs -n 1 cat
+   20  find cluster -name "*.yaml" 2>/dev/null | xargs -n 1 cat
+   21  find cluster -name "*.yaml" 2>/dev/null
+   22  cd cluster/
+   23* find . -name "*
+   24  find cluster -name "*.y*ml" 2>/dev/null
+   25  find cluster -type f 2>/dev/null
+   26  find . -name "*.y*ml" 2>/dev/null | xargs cat
+   27  find . -name "*.y*ml" 2>/dev/null -exec cat
+   28  find . -name "*.y*ml" 2>/dev/null --exec cat
+   29  find . -name "*.y*ml" --exec cat 2>/dev/null
+   30  find help
+   31  find --help
+   32  find . -name "*.y*ml" -exec cat 2>/dev/null
+   33  find . -name "*.y*ml" cat 2>/dev/null -exec cat {} \;
+   34  find . -name "*.y*ml" -exec cat {} \;
+   35  find . -name "*.y*ml" -exec echo {} && cat {} \;
+   36  find . -name "*.y*ml" -exec "echo {} && cat {}" \;
+   37  find . -name "*.y*ml" -exec "echo '{}' && cat {}" \;
+   38  find . -name "*.y*ml" -exec "cat {}" \;
+   39  find . -name "*.y*ml" -exec cat {} \;
+   40  find . -name "*.y*ml" -exec 'echo {}; cat {}' \;
+   41  find . -name "*.y*ml" -exec sh -c 'echo {}; cat {}' \;
+   42  nvim kustomization.yml
+   43  vim kustomization.yml
+   44  ls
+   45  cat system/apps.yml 
+   46  vim kustomization.yml 
+   47  cd ..
+   48  kubectl apply -k cluster/
+   49  vim cluster/kustomization.yml 
+   50  kubectl apply -k cluster/
+   51  kubectl get pods -n harbor
+   52  kubectl get ns
+   53  helm install flux-operator oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator   --namespace flux-system   --create-namespace
+   54  kubectl get ns
+   55  kubectl get gitrepositories.source.toolkit.fluxcd.io -A
+   56  kubectl describe gitrepository -n flux-system system
+   57  kubectl describe kustomization -n flux-system appskubectl describe kustomization -n flux-system apps
+   58  kubectl describe kustomization -n flux-system apps
+   59  kubectl get kustomizations.kustomize.toolkit.fluxcd.io -A
+   60  kubectl describe helmrelease -n flux-system harbor
+   61  kubectl get ns
+   62  kubectl get helmrepositories.source.toolkit.fluxcd.io -n flux-systemkubectl describe helmrepository -n flux-system harbor
+   63  kubectl get helmrepositories.source.toolkit.fluxcd.io -n flux-system
+   64  kubectl describe helmrepository -n flux-system harbor
+   65  kubectl get ns
+   66  kubectl get helmreleases.helm.toolkit.fluxcd.io -n flux-system
+   67  kubectl describe helmrelease -n flux-system harbor
+   68  nvim
+   69  kubectl describe helmrelease -n flux-system harbor
+   70  flux reconcile kustomization apps -n flux-system --with-source
+   71  kubectl describe helmrelease -n flux-system harbor
+   72  kubectl get ns
+   73  kubectl get all -n harbor
+   74  kubectl get all -n harbor --watch
+   75  kubectl get pods -n harbor --watch
+   76  kubectl describe pod/harbor-core-777b7d4957-c988j
+   77  kubectl describe pod/harbor-core-777b7d4957-c988j -n harbor
+   78  kubectl get all -n harbor --watch
+   79  kubectl get all -n harbor
+   80  history
