@@ -270,3 +270,44 @@
    78  kubectl get all -n harbor --watch
    79  kubectl get all -n harbor
    80  history
+
+
+    1  sudo chmod 777 /etc/kubernetes/admin.conf 
+    2  mkdir .kube
+    3  cp /etc/kubernetes/admin.conf .kube/config
+    4  curl -s https://fluxcd.io/install.sh | sudo bash
+    5  flux install
+    6  kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml
+    7  kubectl get storageclass
+    8  kubectl get all
+    9  kubectl get all -A
+   10  kubectl apply -k cluster
+   11  kubectl -n harbor get all
+   12  kubectl -n harbor get all -f
+   13  kubectl -n harbor get all --watch
+   14  kubectl -n harbor get pod --watch
+   15  kubectl -n harbor describe pod harbor-redis-0
+   16  kubectl get storageclass
+   17  kubectl get pods -A | grep -i local-path
+   18  kubectl -n harbor get pvc
+   19  kubectl -n harbor describe pvc data-harbor-redis-0
+   20  kubectl patch storageclass local-path   -p '{"metadata":{"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+   21  kubectl get storageclass
+   22  kubectl -n harbor delete pvc data-harbor-redis-0
+   23  kubectl -n harbor describe pvc data-harbor-redis-0
+   24  kubectl -n harbor get all
+   25  kubectl -n harbor port-forward svc harbor-portal 8080:80 --address 0.0.0.0
+   26  kubectl -n harbor port-forward svc/harbor-portal 8080:80 --address 0.0.0.0
+   27  kubectl -n harbor get ingress
+   28  kubectl create namespace ingress-nginx
+   29  helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+   30  helm repo update
+   31  helm install ingress-nginx ingress-nginx/ingress-nginx   --namespace ingress-nginx
+   32  kubectl get svc -n ingress-nginx
+   33  kubectl get all -A
+   34  kubectl -n harbor get ingress
+   35  kubectl -n harbor describe ingress harbor-ingress
+   36  >kubectl get pods -A | grep -i ingress
+   37  kubectl get svc -A | grep -i ingress
+   38  history
+
