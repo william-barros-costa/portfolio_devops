@@ -72,3 +72,17 @@
     src: /tmp/linux-amd64/helm
     dest: /usr/local/bin/helm
     mode: 0755
+
+- name: Create .kube
+  when: "'master' in group_names"
+  file:
+    path: /home/ubuntu/.kube/
+    state: directory
+
+- name: Move Kubernetes config
+  when: "'master' in group_names"
+  copy:
+    remote_src: true
+    src: /etc/kubernetes/admin.conf
+    dest: /home/ubuntu/.kube/config
+    mode: 0755
