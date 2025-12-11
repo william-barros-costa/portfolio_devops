@@ -1,34 +1,9 @@
-# ---
-# type: ansible
-# title: # ---
-# type: ansible
-# title:     # - helm
-# tags:
-# ---
-# tags:
-# ---
+- name: Install Flux CLI
+  shell: curl -s https://fluxcd.io/install.sh | sudo bash
+  args:
+    creates: /usr/local/bin/flux
 
-
-# ---
-# type: ansible
-# title: # ---
-# type: ansible
-# title:     # - helm
-# tags:
-# ---
-# tags:
-# ---
-
-
-# ---
-# type: ansible
-# title: # ---
-# type: ansible
-# title:     # - helm
-# tags:
-# ---
-# tags:
-# ---
-
-
-
+- name: Install Flux
+  shell: flux install
+  register: flux_bootstrap
+  changed_when: "'reconciled successfully' in flux_bootstrap.stdout or 'installing components in flux-system namespace' in flux_bootstrap.stdout"

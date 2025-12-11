@@ -14,5 +14,5 @@
     - kubernetes
     - cni
     - flux
-    
+    - load-balancer
 

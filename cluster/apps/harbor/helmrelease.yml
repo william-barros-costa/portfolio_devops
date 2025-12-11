@@ -22,5 +22,5 @@ spec:
       type: ingress
       ingress:
         hosts:
-          core: harbor.example.com
-    externalURL: https://harbor.example.com
+          core: portfolio.test/harbor
+    externalURL: https://portfolio.test/harbor
