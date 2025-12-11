@@ -5,12 +5,11 @@ metadata:
   namespace: flux-system
 spec:
   interval: 5m
-  releaseName: 
+  releaseName: ingress-nginx
   targetNamespace: ingress-nginx
   chart:
     spec:
       chart: ingress-nginx
-      version: "1.18.*"
       sourceRef:
         kind: HelmRepository
         name: ingress-nginx
